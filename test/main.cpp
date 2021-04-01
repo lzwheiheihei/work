@@ -30,5 +30,6 @@ int main()
 	{
 		t[i].join();
 	}
+	cout << "hello world" << endl;
 	return 0;
 }
