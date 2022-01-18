@@ -1,0 +1,3 @@
+/Users/liuziwei/Documents/tt_code/work/tt/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/liuziwei/Documents/tt_code/work/tt/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/liuziwei/Documents/tt_code/work/tt/cmake-build-debug/CMakeFiles/tt.dir

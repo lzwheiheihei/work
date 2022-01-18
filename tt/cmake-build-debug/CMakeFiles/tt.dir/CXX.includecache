@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/liuziwei/Documents/tt_code/work/tt/dictMatch.cpp
+iostream
+-
+fstream
+-
+unordered_map
+-
+string
+-
+vector
+-
+
