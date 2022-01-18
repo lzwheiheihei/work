@@ -8,25 +8,23 @@
 #include <string>
 #include <vector>
 
-enum TYPE {
-    MUSIC_AND_MOVIE = 1,
-    MOVIE = 2,
-    MUSIC = 3
-};
+#define MUSIC_AND_MOVIE 1
+#define MOVIE 2
+#define MUSIC 3
 #define MUSIC_AND_MOVIE_STR "-*音乐&电影*-"
 #define MOVIE_STR "-*电影*-"
 #define MUSIC_STR "-*音乐*-"
 
-std::unordered_map<std::string, TYPE> dict_map;
+typedef std::unordered_map<std::string, int> DIC_MAP;
+std::unordered_map<std::string, int> dict_map;
 std::vector<std::string> video_title_vec;
-int max_key_len = 0;
-//可以多线程优化
+int max_str_len = 0;
 void read_dict_file() {
     std::ifstream infile("/Users/liuziwei/Documents/tt_code/hackercup_contest_1/dict.txt");
     std::string data;
     while (std::getline(infile, data)) {
         for (int i = 0; i < data.size(); i++) {
-            max_key_len = std::max(i, max_key_len);
+            max_str_len = std::max(i, max_str_len);
             if (data[i] == '\t') {
                 std::string k = std::string(data.c_str(), i);
                 std::string v = std::string(data, i+1);
@@ -47,7 +45,7 @@ void read_dict_file() {
 }
 
 void read_video_title_file(){
-    std::ifstream infile("/Users/liuziwei/Documents/tt_code/hackercup_contest_1/video_title.txt");
+    std::ifstream infile("/Users/liuziwei/Documents/tt_code/hackercup_contest_1/video_title.txt.bak");
     std::string line;
     while (std::getline(infile, line)){
         video_title_vec.push_back(line);
@@ -55,59 +53,52 @@ void read_video_title_file(){
     infile.close();
 }
 
-void replace(std::string &video_title){
-    int before_pos = 0; //上个被替换的位置
+std::string replace(std::string &str) {
     std::string new_str;
-    for (int i = 0; i < video_title.size(); i++){
-        std::string str = std::string(video_title.begin()+before_pos, video_title.begin()+i);//从上个位置到当前位置
-        if (dict_map.find(str) != dict_map.end()) {
-            if (max_key_len < str.size()) {
-                std::string expand_str = std::string(str.begin()+str.size()-before_pos, str.end());
-                if (dict_map.find(expand_str) != dict_map.end()){
-                    std::string replaced_str;
-                    TYPE res = dict_map[expand_str];
-                    switch (res) {
-                        case MUSIC_AND_MOVIE:
-                            replaced_str = MUSIC_AND_MOVIE_STR;
-                            break;
-                        case MUSIC:
-                            replaced_str = MUSIC_STR;
-                            break;
-                        case MOVIE:
-                            replaced_str = MOVIE_STR;
-                            break;
-                    }
-                }
-//                expand_str =
-            } else {
-                std::string replaced_str;
-                TYPE res = dict_map[str];
-                switch (res) {
-                    case MUSIC_AND_MOVIE:
-                        replaced_str = MUSIC_AND_MOVIE_STR;
-                        break;
-                    case MUSIC:
-                        replaced_str = MUSIC_STR;
-                        break;
-                    case MOVIE:
-                        replaced_str = MOVIE_STR;
-                        break;
-                }
+    for (int i = 0; i < str.size(); )
+    {
+        int idx = i;
+        for (int j = i; j < str.size(); j++)
+        {
+            std::string substr = std::string(str.begin() + i, str.begin() + j);
+            if (dict_map.find(substr) != dict_map.end()) {
+                idx = j;
             }
-
+            if (j - i > max_str_len) {
+                break;
+            }
+        }
+        if (idx != i){
+            std::string substr = std::string(str.begin() + i, str.begin() + idx);
+            int replaced_type = dict_map[substr];
+            std::string replaced_str;
+            if (replaced_type == MUSIC){
+                replaced_str = MUSIC_STR;
+            } else if (replaced_type == MOVIE) {
+                replaced_str = MOVIE_STR;
+            } else if (replaced_type == MUSIC_AND_MOVIE)
+                replaced_str = MUSIC_AND_MOVIE_STR;
+            new_str = new_str + replaced_str;
+            i = idx;
+        } else {
+            std::string substr = std::string(str.begin()+i, str.begin()+i+1);
+            new_str = new_str + substr;
+            i++;
         }
     }
+    return new_str;
 }
 
 int main(){
     read_dict_file();
-    int line = 0;
-    for(std::unordered_map<std::string, TYPE>::iterator it = dict_map.begin(); it != dict_map.end(); it++) {
-        std::cout << line++ << " " << it->first << " " << it->second << std::endl;
-    }
-    std::cout << max_key_len;
     read_video_title_file();
-    for (int i = 0; i < 10; i++){
-        replace(video_title_vec[i]);
+    std::ofstream out;
+    out.open("result.txt", std::ios::app);
+    if (!out) {
+       std::cout << "error open file result.txt";
     }
+    for (int i = 0; i < video_title_vec.size(); i++){
+        out << replace(video_title_vec[i]) << std::endl;
+    }
+    std::cout << "success" << std::endl;
 }

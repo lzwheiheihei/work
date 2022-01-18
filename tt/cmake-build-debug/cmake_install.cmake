@@ -1,4 +1,4 @@
-# Install script for directory: /Users/liuziwei/Documents/tt_code/work/tt
+# Install script for directory: /Users/liuziwei/Documents/code/work/tt
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/liuziwei/Documents/tt_code/work/tt/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/liuziwei/Documents/code/work/tt/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

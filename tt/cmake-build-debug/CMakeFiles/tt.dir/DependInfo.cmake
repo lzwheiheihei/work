@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/Users/liuziwei/Documents/tt_code/work/tt/dictMatch.cpp" "/Users/liuziwei/Documents/tt_code/work/tt/cmake-build-debug/CMakeFiles/tt.dir/dictMatch.cpp.o"
+  "/Users/liuziwei/Documents/code/work/tt/dictMatch.cpp" "/Users/liuziwei/Documents/code/work/tt/cmake-build-debug/CMakeFiles/tt.dir/dictMatch.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 
